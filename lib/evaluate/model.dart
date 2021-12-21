@@ -22,7 +22,11 @@ class Model {
       _q24,
       _q25,
       _q26,
-      _q27;
+      _q27,
+      _comment1,
+      _comment2,
+      _comment3,
+      _comment4;
   static String? _history_id;
   static List? _facilitators;
 
@@ -123,6 +127,22 @@ class Model {
     _history_id = history_id;
   }
 
+  void set_comment1(String comment1) {
+    _comment1 = comment1;
+  }
+
+  void set_comment2(String comment2) {
+    _comment2 = comment2;
+  }
+
+  void set_comment3(String comment3) {
+    _comment3 = comment3;
+  }
+
+  void set_comment4(String comment4) {
+    _comment4 = comment4;
+  }
+
 //Getter
   String? get_evaluator_id() {
     return _evaluator_id;
@@ -218,5 +238,21 @@ class Model {
 
   String? get_history_id() {
     return _history_id;
+  }
+
+  String? get_comment1() {
+    return _comment1;
+  }
+
+  String? get_comment2() {
+    return _comment2;
+  }
+
+  String? get_comment3() {
+    return _comment3;
+  }
+
+  String? get_comment4() {
+    return _comment4;
   }
 }

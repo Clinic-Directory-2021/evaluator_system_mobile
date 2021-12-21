@@ -1,5 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evaluator_system_mobile/evaluate/evaluate1.dart';
+import 'package:evaluator_system_mobile/evaluate/evaluate1_1.dart';
 import 'package:evaluator_system_mobile/evaluate/evaluate2.dart';
+import 'package:evaluator_system_mobile/evaluate/evaluate3.dart';
+import 'package:evaluator_system_mobile/evaluate/evaluate4.dart';
+import 'package:evaluator_system_mobile/evaluate/evaluate6.dart';
 import 'package:evaluator_system_mobile/evaluate/model.dart';
 import 'package:evaluator_system_mobile/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,6 +32,11 @@ class _EvaluatePage5State extends State<EvaluatePage5> {
       .collection('evaluators')
       .doc(Model().get_evaluator_id())
       .collection('history');
+
+  CollectionReference already_evaluated = FirebaseFirestore.instance
+      .collection('evaluators')
+      .doc(Model().get_evaluator_id())
+      .collection('already_evaluated');
 
   Future<void> addEvaluator() {
     // Call the user's CollectionReference to add a new user
@@ -88,6 +98,19 @@ class _EvaluatePage5State extends State<EvaluatePage5> {
           'q25': Model().get_q25(),
           'q26': Model().get_q26(),
           'q27': Model().get_q27(),
+        })
+        .then((value) => print("Evaluator Added"))
+        .catchError((error) => print("Failed to add evaluator: $error"));
+  }
+
+  Future<void> addAlreadyEvaluated() {
+    // Call the user's CollectionReference to add a new user
+    return already_evaluated
+        .doc(Model().get_seminar_id())
+        .set({
+          'uid': currentUser.uid.toString(),
+          'status': "Already Evaluated",
+          "id": Model().get_seminar_id()
         })
         .then((value) => print("Evaluator Added"))
         .catchError((error) => print("Failed to add evaluator: $error"));
@@ -515,20 +538,22 @@ class _EvaluatePage5State extends State<EvaluatePage5> {
                         Model().set_q25(EvaluatePage5.value25);
                         Model().set_q26(EvaluatePage5.value26);
                         Model().set_q27(EvaluatePage5.value27);
-                        addEvaluator();
-                        addHistory();
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Successfully Evaluated " +
-                                Model().get_seminar_title().toString() +
-                                ".")));
+                        // addEvaluator();
+                        // addHistory();
+                        // addAlreadyEvaluated();
+
+                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //     content: Text("Successfully Evaluated " +
+                        //         Model().get_seminar_title().toString() +
+                        //         ".")));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MyHomePage()));
+                                builder: (context) => const EvaluatePage6()));
                       }
                     },
                     padding: const EdgeInsets.all(10),
-                    child: const Text("Submit Evaluation"),
+                    child: const Text("Proceed to Comments"),
                     color: const Color(0xff28B5B5),
                   ),
                 ],

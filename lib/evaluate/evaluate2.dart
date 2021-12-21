@@ -18,20 +18,20 @@ class EvaluatePage2 extends StatefulWidget {
   static String value15 = "";
   static String value16 = "";
   static String value17 = "";
+
+  static var facilitators = ["Select Facilitator"];
+  static List facilitator_id = [];
+  static String? value;
+  static String? value_id;
+  static int value_index = 0;
+  static int ctr = 0;
+  static int? facilitator_len;
+  static String button_value = "Evaluate";
+  static Color button_color = const Color(0xfff0ad4e);
+  static String id_last = "";
   @override
   State<EvaluatePage2> createState() => _EvaluatePage2State();
 }
-
-var facilitators = ["Select Facilitator"];
-List facilitator_id = [];
-String? value;
-String? value_id;
-int value_index = 0;
-int ctr = 0;
-int? facilitator_len;
-String button_value = "Evaluate";
-Color button_color = const Color(0xfff0ad4e);
-String id_last = "";
 
 class _EvaluatePage2State extends State<EvaluatePage2> {
 //Widget for dropdown/Gender
@@ -51,8 +51,8 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
         .then((QuerySnapshot querySnapshot) {
       setState(() {
         querySnapshot.docs.forEach((doc) {
-          facilitators.add(doc['facilitator_name']);
-          facilitator_id.add([doc.id]);
+          EvaluatePage2.facilitators.add(doc['facilitator_name']);
+          EvaluatePage2.facilitator_id.add([doc.id]);
         });
       });
     });
@@ -64,11 +64,11 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
         decoration:
             BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
         child: DropdownButtonFormField<String>(
-          value: value,
+          value: EvaluatePage2.value,
           hint: const Text("Select Facilitator"),
           style: const TextStyle(color: Colors.black),
           isExpanded: true,
-          items: facilitators.map((String value) {
+          items: EvaluatePage2.facilitators.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),
@@ -76,9 +76,12 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
           }).toList(),
           onChanged: (s) {
             setState(() {
-              value = s;
-              value_index = facilitators.indexOf(s!) - 1;
-              value_id = facilitator_id[value_index - 1].toString();
+              EvaluatePage2.value = s;
+              EvaluatePage2.value_index =
+                  EvaluatePage2.facilitators.indexOf(s!) - 1;
+              EvaluatePage2.value_id = EvaluatePage2
+                  .facilitator_id[EvaluatePage2.value_index - 1]
+                  .toString();
 
               EvaluatePage2.value9 = "";
               EvaluatePage2.value10 = "";
@@ -930,13 +933,14 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                     ),
                     MaterialButton(
                       onPressed: () {
-                        value_id = facilitator_id[value_index]
+                        EvaluatePage2.value_id = EvaluatePage2
+                            .facilitator_id[EvaluatePage2.value_index]
                             .toString()
                             .replaceAll("[", " ")
                             .replaceAll("]", "");
                         setState(() {
-                          if (button_value == "Next") {
-                            facilitators = [];
+                          if (EvaluatePage2.button_value == "Next") {
+                            EvaluatePage2.facilitators = [];
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -957,18 +961,21 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                       content: Text(
                                           "All questions are need to evaluate.")));
                             } else {
-                              if (value.toString() == "Select Facilitator" ||
-                                  value.toString() == "null") {
+                              if (EvaluatePage2.value.toString() ==
+                                      "Select Facilitator" ||
+                                  EvaluatePage2.value.toString() == "null") {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content:
                                             Text("Please select facilitator")));
-                              } else if (id_last == value_id) {
+                              } else if (EvaluatePage2.id_last ==
+                                  EvaluatePage2.value_id) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                         content: Text(
                                             "You already evaluated  " +
-                                                value.toString())));
+                                                EvaluatePage2.value
+                                                    .toString())));
                               } else {
                                 FirebaseFirestore.instance
                                     .collection('evaluations')
@@ -977,40 +984,17 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                     .get()
                                     .then((QuerySnapshot querySnapshot) {
                                   querySnapshot.docs.forEach((doc) {
-                                    CollectionReference evaluators =
-                                        FirebaseFirestore.instance
-                                            .collection('evaluations')
-                                            .doc(Model()
-                                                .get_seminar_id()
-                                                .toString())
-                                            .collection('evaluators')
-                                            .doc(Model().get_evaluator_id())
-                                            .collection('facilitators');
-
-                                    Future<void> addUser() {
-                                      // Call the user's CollectionReference to add a new user
-                                      return evaluators
-                                          .doc()
-                                          .set({
-                                            'q9': EvaluatePage2.value9,
-                                            'q10': EvaluatePage2.value10,
-                                            'q11': EvaluatePage2.value11,
-                                            'q12': EvaluatePage2.value12,
-                                            'q13': EvaluatePage2.value13,
-                                            'q14': EvaluatePage2.value14,
-                                            'q15': EvaluatePage2.value15,
-                                            'q16': EvaluatePage2.value16,
-                                            'q17': EvaluatePage2.value17,
-                                          })
-                                          .then((value) {})
-                                          .catchError((error) => print(
-                                              "Failed to add user: $error"));
-                                    }
-
-                                    addUser();
-
                                     print(Model().get_history_id());
                                   });
+                                  CollectionReference evaluators =
+                                      FirebaseFirestore.instance
+                                          .collection('evaluations')
+                                          .doc(Model()
+                                              .get_seminar_id()
+                                              .toString())
+                                          .collection('evaluators')
+                                          .doc(Model().get_evaluator_id())
+                                          .collection('facilitators');
                                   CollectionReference evaluator =
                                       FirebaseFirestore.instance
                                           .collection('evaluators')
@@ -1023,7 +1007,27 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                   Future<void> addHistory() {
                                     // Call the user's CollectionReference to add a new user
                                     return evaluator
-                                        .doc(value_id)
+                                        .doc(EvaluatePage2.value_id)
+                                        .set({
+                                          'q9': EvaluatePage2.value9,
+                                          'q10': EvaluatePage2.value10,
+                                          'q11': EvaluatePage2.value11,
+                                          'q12': EvaluatePage2.value12,
+                                          'q13': EvaluatePage2.value13,
+                                          'q14': EvaluatePage2.value14,
+                                          'q15': EvaluatePage2.value15,
+                                          'q16': EvaluatePage2.value16,
+                                          'q17': EvaluatePage2.value17,
+                                        })
+                                        .then((value) {})
+                                        .catchError((error) => print(
+                                            "Failed to add user: $error"));
+                                  }
+
+                                  Future<void> addUser() {
+                                    // Call the user's CollectionReference to add a new user
+                                    return evaluators
+                                        .doc()
                                         .set({
                                           'q9': EvaluatePage2.value9,
                                           'q10': EvaluatePage2.value10,
@@ -1041,22 +1045,27 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                   }
 
                                   addHistory();
+                                  addUser();
                                 });
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                         content: Text(
                                             "Successfully Evaluated " +
-                                                value.toString())));
-                                id_last = value_id.toString();
-                                print(id_last);
-                                ctr++;
+                                                EvaluatePage2.value
+                                                    .toString())));
+                                EvaluatePage2.id_last =
+                                    EvaluatePage2.value_id.toString();
+                                print(EvaluatePage2.id_last);
+                                EvaluatePage2.ctr++;
                               }
                             }
                           }
-                          if (ctr == facilitator_id.length) {
-                            button_value = "Next";
-                            button_color = const Color(0xff22bb33);
+                          if (EvaluatePage2.ctr ==
+                              EvaluatePage2.facilitator_id.length) {
+                            EvaluatePage2.button_value = "Next";
+                            EvaluatePage2.button_color =
+                                const Color(0xff22bb33);
                           }
                         });
                         // Navigator.push(
@@ -1065,9 +1074,9 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                         //         builder: (context) => const EvaluatePage2()));
                       },
                       padding: const EdgeInsets.all(10),
-                      child: Text(button_value),
+                      child: Text(EvaluatePage2.button_value),
                       textColor: Colors.white,
-                      color: button_color,
+                      color: EvaluatePage2.button_color,
                     ),
                     const SizedBox(
                       width: 10,
