@@ -29,30 +29,6 @@ getCurrentDate() {
 }
 
 class _EvaluatePage6State extends State<EvaluatePage6> {
-  final access_code_controller = TextEditingController();
-  Widget textField(
-      {labelText, hintText, obscureText, icon = Icons.email, controller}) {
-    return TextFormField(
-      obscureText: obscureText,
-      controller: controller,
-      decoration: InputDecoration(
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xff4B778D)),
-        ),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-        ),
-        prefixIcon: Icon(
-          icon,
-          color: const Color(0xff4B778D),
-        ),
-        labelText: labelText,
-        floatingLabelStyle: const TextStyle(color: Color(0xff4B778D)),
-        hintText: hintText,
-      ),
-    );
-  }
-
   var currentUser = FirebaseAuth.instance.currentUser;
 
   CollectionReference evaluators = FirebaseFirestore.instance
@@ -296,41 +272,7 @@ class _EvaluatePage6State extends State<EvaluatePage6> {
                       width: 10,
                     ),
                     MaterialButton(
-                      onPressed: () => showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('AlertDialog Title'),
-                          content: Column(
-                            children: [
-                              textField(
-                                labelText: "Enter Access Code",
-                                hintText: "example: 1612345567",
-                                obscureText: false,
-                                icon: Icons.password,
-                                controller: access_code_controller,
-                              )
-                            ],
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                if (access_code_controller.text != "") {
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content:
-                                              Text("Field Cannot be empty.")));
-                                }
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      ),
+                      onPressed: () {},
                       padding: const EdgeInsets.all(10),
                       child: const Text("Submit Evaluation"),
                       color: const Color(0xff28B5B5),
