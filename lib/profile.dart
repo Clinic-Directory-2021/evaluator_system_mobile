@@ -55,6 +55,13 @@ class _ProfileState extends State<Profile> {
             doc['email'],
             doc.id.toString()
           ]);
+
+          Model().set_full_name(doc['first_name'] +
+              " " +
+              doc['middle_name'] +
+              " " +
+              doc['last_name']);
+          Model().set_email(doc['email']);
         });
       });
     });

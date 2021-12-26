@@ -3,6 +3,8 @@ import 'package:evaluator_system_mobile/evaluate/evaluate5.dart';
 import 'package:evaluator_system_mobile/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:timezone/standalone.dart' as tz;
 
 import 'evaluate1.dart';
 import 'evaluate1_1.dart';
@@ -22,7 +24,35 @@ class EvaluatePage6 extends StatefulWidget {
   State<EvaluatePage6> createState() => _EvaluatePage6State();
 }
 
+getCurrentDate() {
+  return DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
+}
+
 class _EvaluatePage6State extends State<EvaluatePage6> {
+  final access_code_controller = TextEditingController();
+  Widget textField(
+      {labelText, hintText, obscureText, icon = Icons.email, controller}) {
+    return TextFormField(
+      obscureText: obscureText,
+      controller: controller,
+      decoration: InputDecoration(
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xff4B778D)),
+        ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
+        ),
+        prefixIcon: Icon(
+          icon,
+          color: const Color(0xff4B778D),
+        ),
+        labelText: labelText,
+        floatingLabelStyle: const TextStyle(color: Color(0xff4B778D)),
+        hintText: hintText,
+      ),
+    );
+  }
+
   var currentUser = FirebaseAuth.instance.currentUser;
 
   CollectionReference evaluators = FirebaseFirestore.instance
@@ -46,6 +76,9 @@ class _EvaluatePage6State extends State<EvaluatePage6> {
         .doc(Model().get_evaluator_id())
         .set({
           'uid': currentUser.uid.toString(),
+          'full_name': Model().get_full_name(),
+          'evaluatorEmail': Model().get_email(),
+          'date_posted': now.toString(),
           'q1': Model().get_q1(),
           'q2': Model().get_q2(),
           'q3': Model().get_q3(),
@@ -263,74 +296,41 @@ class _EvaluatePage6State extends State<EvaluatePage6> {
                       width: 10,
                     ),
                     MaterialButton(
-                      onPressed: () {
-                        if (c1.toString() == "" ||
-                            c1.toString() == "" ||
-                            c1.toString() == "" ||
-                            c1.toString() == "") {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      "All questions are need to evaluate.")));
-                        } else {
-                          Model().set_comment1(c1.toString());
-                          Model().set_comment2(c2.toString());
-                          Model().set_comment3(c3.toString());
-                          Model().set_comment4(c4.toString());
-                          addEvaluator();
-                          addHistory();
-                          addAlreadyEvaluated();
-                          setState(() {
-                            EvaluatePage1.value1 = "";
-                            EvaluatePage1.value2 = "";
-                            EvaluatePage1.value3 = "";
-                            EvaluatePage1.value4 = "";
-                            EvaluatePage1_1.value5 = "";
-                            EvaluatePage1_1.value6 = "";
-                            EvaluatePage1_1.value7 = "";
-                            EvaluatePage1_1.value8 = "";
-                            EvaluatePage2.value9 = "";
-                            EvaluatePage2.value10 = "";
-                            EvaluatePage2.value11 = "";
-                            EvaluatePage2.value12 = "";
-                            EvaluatePage2.value13 = "";
-                            EvaluatePage2.value14 = "";
-                            EvaluatePage2.value15 = "";
-                            EvaluatePage2.value16 = "";
-                            EvaluatePage2.value17 = "";
-                            EvaluatePage3.value18 = "";
-                            EvaluatePage3.value19 = "";
-                            EvaluatePage3.value20 = "";
-                            EvaluatePage4.value21 = "";
-                            EvaluatePage4.value22 = "";
-                            EvaluatePage4.value23 = "";
-                            EvaluatePage5.value24 = "";
-                            EvaluatePage5.value25 = "";
-                            EvaluatePage5.value26 = "";
-                            EvaluatePage5.value27 = "";
-                            EvaluatePage2.facilitator_id.clear();
-                            // facilitators = ["Select Facilitators"];
-                            // facilitator_id = [];
-                            // value = "";
-                            // value_id = "";
-                            // value_index = 0;
-                            // ctr = 0;
-                            // facilitator_len = 0;
-                            EvaluatePage2.button_value = "Evaluate";
-                            EvaluatePage2.button_color =
-                                const Color(0xfff0ad4e);
-                            EvaluatePage2.id_last = "";
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Successfully Evaluated " +
-                                  Model().get_seminar_title().toString() +
-                                  ".")));
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MyHomePage()));
-                        }
-                      },
+                      onPressed: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('AlertDialog Title'),
+                          content: Column(
+                            children: [
+                              textField(
+                                labelText: "Enter Access Code",
+                                hintText: "example: 1612345567",
+                                obscureText: false,
+                                icon: Icons.password,
+                                controller: access_code_controller,
+                              )
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                if (access_code_controller.text != "") {
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content:
+                                              Text("Field Cannot be empty.")));
+                                }
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      ),
                       padding: const EdgeInsets.all(10),
                       child: const Text("Submit Evaluation"),
                       color: const Color(0xff28B5B5),

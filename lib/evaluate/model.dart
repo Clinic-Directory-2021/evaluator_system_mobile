@@ -4,7 +4,9 @@ class Model {
       _seminar_id,
       _program_owner,
       _date_created,
-      _evaluator_id;
+      _evaluator_id,
+      _full_name,
+      _email;
   static String? _q1,
       _q2,
       _q3,
@@ -49,6 +51,14 @@ class Model {
 
   void set_date_created(String date_created) {
     _date_created = date_created;
+  }
+
+  void set_full_name(String full_name) {
+    _full_name = full_name;
+  }
+
+  void set_email(String email) {
+    _email = email;
   }
 
   void set_q1(String q1) {
@@ -162,6 +172,14 @@ class Model {
 
   String? get_date_created() {
     return _date_created;
+  }
+
+  String? get_full_name() {
+    return _full_name;
+  }
+
+  String? get_email() {
+    return _email;
   }
 
   String? get_q1() {
