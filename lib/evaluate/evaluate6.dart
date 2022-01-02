@@ -272,7 +272,75 @@ class _EvaluatePage6State extends State<EvaluatePage6> {
                       width: 10,
                     ),
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (c1.text == "" ||
+                            c1.text == "" ||
+                            c1.text == "" ||
+                            c1.text == "") {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      "All questions are need to evaluate.")));
+                        } else {
+                          Model().set_comment1(c1.text);
+                          Model().set_comment2(c2.text);
+                          Model().set_comment3(c3.text);
+                          Model().set_comment4(c4.text);
+                          addEvaluator();
+                          addHistory();
+                          addAlreadyEvaluated();
+                          print(Model().get_evaluator_id());
+                          setState(() {
+                            EvaluatePage1.value1 = "";
+                            EvaluatePage1.value2 = "";
+                            EvaluatePage1.value3 = "";
+                            EvaluatePage1.value4 = "";
+                            EvaluatePage1_1.value5 = "";
+                            EvaluatePage1_1.value6 = "";
+                            EvaluatePage1_1.value7 = "";
+                            EvaluatePage1_1.value8 = "";
+                            EvaluatePage2.value9 = "";
+                            EvaluatePage2.value10 = "";
+                            EvaluatePage2.value11 = "";
+                            EvaluatePage2.value12 = "";
+                            EvaluatePage2.value13 = "";
+                            EvaluatePage2.value14 = "";
+                            EvaluatePage2.value15 = "";
+                            EvaluatePage2.value16 = "";
+                            EvaluatePage2.value17 = "";
+                            EvaluatePage3.value18 = "";
+                            EvaluatePage3.value19 = "";
+                            EvaluatePage3.value20 = "";
+                            EvaluatePage4.value21 = "";
+                            EvaluatePage4.value22 = "";
+                            EvaluatePage4.value23 = "";
+                            EvaluatePage5.value24 = "";
+                            EvaluatePage5.value25 = "";
+                            EvaluatePage5.value26 = "";
+                            EvaluatePage5.value27 = "";
+                            EvaluatePage2.facilitator_id.clear();
+                            // facilitators = ["Select Facilitators"];
+                            // facilitator_id = [];
+                            // value = "";
+                            // value_id = "";
+                            // value_index = 0;
+                            // ctr = 0;
+                            // facilitator_len = 0;
+                            EvaluatePage2.button_value = "Evaluate";
+                            EvaluatePage2.button_color =
+                                const Color(0xfff0ad4e);
+                            EvaluatePage2.id_last = "";
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Successfully Evaluated " +
+                                  Model().get_seminar_title().toString() +
+                                  ".")));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MyHomePage()));
+                        }
+                      },
                       padding: const EdgeInsets.all(10),
                       child: const Text("Submit Evaluation"),
                       color: const Color(0xff28B5B5),
