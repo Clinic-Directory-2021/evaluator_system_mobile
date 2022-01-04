@@ -1027,7 +1027,7 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                   Future<void> addUser() {
                                     // Call the user's CollectionReference to add a new user
                                     return evaluators
-                                        .doc()
+                                        .doc(EvaluatePage2.value)
                                         .set({
                                           'q9': EvaluatePage2.value9,
                                           'q10': EvaluatePage2.value10,
