@@ -995,6 +995,7 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                           .collection('evaluators')
                                           .doc(Model().get_evaluator_id())
                                           .collection('facilitators');
+
                                   CollectionReference evaluator =
                                       FirebaseFirestore.instance
                                           .collection('evaluators')
