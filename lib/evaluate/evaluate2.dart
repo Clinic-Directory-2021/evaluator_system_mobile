@@ -993,7 +993,7 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                               .get_seminar_id()
                                               .toString())
                                           .collection('evaluators')
-                                          .doc(Model().get_evaluator_id())
+                                          .doc(Model().get_seminar_id())
                                           .collection('facilitators');
                                   CollectionReference evaluator =
                                       FirebaseFirestore.instance
@@ -1002,7 +1002,7 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                               .get_evaluator_id()
                                               .toString())
                                           .collection('history')
-                                          .doc(Model().get_history_id())
+                                          .doc(Model().get_seminar_id())
                                           .collection('facilitators');
                                   Future<void> addHistory() {
                                     // Call the user's CollectionReference to add a new user
