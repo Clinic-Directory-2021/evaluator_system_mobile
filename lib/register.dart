@@ -198,6 +198,10 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
                         int document_id = now.millisecondsSinceEpoch;
                         CollectionReference users =
                             FirebaseFirestore.instance.collection('evaluators');
+
+                        CollectionReference users_report = FirebaseFirestore
+                            .instance
+                            .collection('evaluator_report');
                         UserCredential userCredential = await FirebaseAuth
                             .instance
                             .createUserWithEmailAndPassword(
@@ -238,7 +242,43 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
                                   });
                         }
 
+                        Future<void> addUserReport() {
+                          // Call the user's CollectionReference to add a new user
+                          return users_report
+                              .doc(document_id.toString())
+                              .set({
+                                'date_created': now.toString(),
+                                'evaluator_id': document_id.toString(),
+                                'uid': userCredential.user.uid.toString(),
+                                'first_name': first_name.text,
+                                'middle_name': middle_name.text,
+                                'last_name': last_name.text,
+                                'gender': gender.text,
+                                'phone_number': phone_number.text,
+                                'school_office': school_office.text,
+                                'position': position.text,
+                                'email': email.text,
+                              })
+                              .then((value) => {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Successfully Added for Mr/Ms/Mrs " +
+                                                    first_name.text +
+                                                    " " +
+                                                    middle_name.text +
+                                                    " " +
+                                                    last_name.text)))
+                                  })
+                              .catchError((error) => {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(error.toString())))
+                                  });
+                        }
+
                         addUser();
+                        addUserReport();
 
                         Navigator.push(
                             context,
