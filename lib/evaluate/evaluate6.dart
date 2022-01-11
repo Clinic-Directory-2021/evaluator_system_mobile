@@ -88,7 +88,7 @@ class _EvaluatePage6State extends State<EvaluatePage6> {
   Future<void> addHistory() {
     // Call the user's CollectionReference to add a new user
     return evaluator
-        .doc(Model().get_history_id())
+        .doc(Model().get_seminar_id())
         .set({
           'uid': currentUser.uid.toString(),
           'date_posted': DateTime.now().toString(),

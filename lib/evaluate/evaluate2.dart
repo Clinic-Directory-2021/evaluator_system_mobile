@@ -1007,8 +1007,11 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                   Future<void> addHistory() {
                                     // Call the user's CollectionReference to add a new user
                                     return evaluator
-                                        .doc(EvaluatePage2.value_id)
+                                        .doc(EvaluatePage2.value)
                                         .set({
+                                          'exist': "true",
+                                          'facilitator_name':
+                                              EvaluatePage2.value,
                                           'q9': EvaluatePage2.value9,
                                           'q10': EvaluatePage2.value10,
                                           'q11': EvaluatePage2.value11,
@@ -1029,6 +1032,9 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                     return evaluators
                                         .doc(EvaluatePage2.value)
                                         .set({
+                                          'exist': "true",
+                                          'facilitator_name':
+                                              EvaluatePage2.value,
                                           'q9': EvaluatePage2.value9,
                                           'q10': EvaluatePage2.value10,
                                           'q11': EvaluatePage2.value11,
