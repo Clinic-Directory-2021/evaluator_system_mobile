@@ -993,7 +993,7 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                               .get_seminar_id()
                                               .toString())
                                           .collection('evaluators')
-                                          .doc(Model().get_seminar_id())
+                                          .doc(Model().get_evaluator_id())
                                           .collection('facilitators');
                                   CollectionReference evaluator =
                                       FirebaseFirestore.instance

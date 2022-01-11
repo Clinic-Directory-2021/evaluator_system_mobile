@@ -61,12 +61,6 @@ class _HistoryState extends State<History> {
                   title: credential[0],
                   subtitle: credential[1],
                   leading: Icons.app_registration,
-                  trailing: MaterialButton(
-                    color: const Color(0xff28B5B5),
-                    textColor: Colors.white,
-                    onPressed: () {},
-                    child: const Text("View this evaluation"),
-                  ),
                 ),
             ],
           ),
