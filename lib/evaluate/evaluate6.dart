@@ -11,6 +11,7 @@ import 'evaluate1_1.dart';
 import 'evaluate2.dart';
 import 'evaluate3.dart';
 import 'evaluate4.dart';
+import 'evaluate7.dart';
 import 'model.dart';
 
 class EvaluatePage6 extends StatefulWidget {
@@ -73,6 +74,10 @@ class _EvaluatePage6State extends State<EvaluatePage6> {
           'q25': Model().get_q25(),
           'q26': Model().get_q26(),
           'q27': Model().get_q27(),
+          'q28': Model().get_q28(),
+          'q29': Model().get_q29(),
+          'q30': Model().get_q30(),
+          'q31': Model().get_q31(),
           'c1': Model().get_comment1(),
           'c2': Model().get_comment2(),
           'c3': Model().get_comment3(),
@@ -113,6 +118,10 @@ class _EvaluatePage6State extends State<EvaluatePage6> {
           'q25': Model().get_q25(),
           'q26': Model().get_q26(),
           'q27': Model().get_q27(),
+          'q28': Model().get_q28(),
+          'q29': Model().get_q29(),
+          'q30': Model().get_q30(),
+          'q31': Model().get_q31(),
           'c1': Model().get_comment1(),
           'c2': Model().get_comment2(),
           'c3': Model().get_comment3(),
@@ -318,6 +327,10 @@ class _EvaluatePage6State extends State<EvaluatePage6> {
                             EvaluatePage5.value25 = "";
                             EvaluatePage5.value26 = "";
                             EvaluatePage5.value27 = "";
+                            EvaluatePage7.value28 = "";
+                            EvaluatePage7.value29 = "";
+                            EvaluatePage7.value30 = "";
+                            EvaluatePage7.value31 = "";
                             EvaluatePage2.facilitator_id.clear();
                             // facilitators = ["Select Facilitators"];
                             // facilitator_id = [];

@@ -25,6 +25,10 @@ class Model {
       _q25,
       _q26,
       _q27,
+      _q28,
+      _q29,
+      _q30,
+      _q31,
       _comment1,
       _comment2,
       _comment3,
@@ -131,6 +135,22 @@ class Model {
 
   void set_q27(String q27) {
     _q27 = q27;
+  }
+
+  void set_q28(String q28) {
+    _q28 = q28;
+  }
+
+  void set_q29(String q29) {
+    _q29 = q29;
+  }
+
+  void set_q30(String q30) {
+    _q30 = q30;
+  }
+
+  void set_q31(String q31) {
+    _q31 = q31;
   }
 
   void set_history_id(String history_id) {
@@ -252,6 +272,22 @@ class Model {
 
   String? get_q27() {
     return _q27;
+  }
+
+  String? get_q28() {
+    return _q28;
+  }
+
+  String? get_q29() {
+    return _q29;
+  }
+
+  String? get_q30() {
+    return _q30;
+  }
+
+  String? get_q31() {
+    return _q31;
   }
 
   String? get_history_id() {
