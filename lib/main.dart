@@ -73,7 +73,7 @@ class _MyHomePageState extends State<Main> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             const Text(
-              "Welcome to DepEd Malolos Seminar and Training Evaluation App",
+              "City Schools Division of Malolos Online Evaluation System",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
             ),
