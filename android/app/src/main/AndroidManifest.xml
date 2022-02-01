@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.evaluator_system_mobile">
    <application
-        android:label="evaluator_system_mobile"
+        android:label="DepEd Malolos Evaluation App"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
