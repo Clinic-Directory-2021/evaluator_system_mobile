@@ -28,7 +28,8 @@ class _EvaluatePage1_1State extends State<EvaluatePage1_1> {
           'date': Model().get_date_created(),
           'seminar_id': Model().get_seminar_id(),
           'seminar_title': Model().get_seminar_title(),
-          'program_owner': Model().get_program_owner()
+          'program_owner': Model().get_program_owner(),
+          'program_owner_position': Model().get_program_owner_position()
         })
         .then((value) => print("evaluation Added"))
         .catchError((error) => print("Failed to add evaluation: $error"));

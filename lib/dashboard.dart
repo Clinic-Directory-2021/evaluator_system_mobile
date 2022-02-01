@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 //Firebase Import
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -83,13 +84,18 @@ class _DashboardState extends State<Dashboard> {
             .then((QuerySnapshot querySnapshot) {
           querySnapshot.docs.forEach((doc) {
             // print(already_evaluated_list.isEmpty);
+
             setState(() {
+              var formatter = new DateFormat('yyyy-MM-dd, hh:mm');
+              String date_created =
+                  formatter.format(doc['date_created'].toDate());
               if (already_evaluated_list.isEmpty) {
                 data.add([
                   doc['seminar_title'],
                   doc['seminar_id'],
                   doc['program_owner'],
-                  doc['date_created'].toString(),
+                  date_created,
+                  doc['program_owner_position'],
                 ]);
               } else {
                 print(already_evaluated_list.contains(doc.id));
@@ -98,7 +104,8 @@ class _DashboardState extends State<Dashboard> {
                     doc['seminar_title'],
                     doc['seminar_id'],
                     doc['program_owner'],
-                    doc['date_created'].toString(),
+                    date_created,
+                    doc['program_owner_position']
                   ]);
                 }
               }
@@ -161,67 +168,19 @@ class _DashboardState extends State<Dashboard> {
                   trailing: MaterialButton(
                     color: const Color(0xff28B5B5),
                     textColor: Colors.white,
-                    onPressed: () => showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Enter Access Code'),
-                        content: Column(
-                          children: [
-                            textField(
-                              labelText: "Enter Access Code",
-                              hintText: "example: 1612345567",
-                              obscureText: false,
-                              icon: Icons.password,
-                              controller: access_code_controller,
-                            ),
-                          ],
+                    onPressed: () {
+                      Model().set_seminar_title(seminar[0]);
+                      Model().set_program_owner(seminar[2]);
+                      Model().set_seminar_id(seminar[1]);
+                      Model().set_date_created(seminar[3]);
+                      Model().set_program_owner_position(seminar[4]);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EvaluatePage(),
                         ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              if (access_code_controller.text != "") {
-                                if (access_code_controller.text == seminar[1]) {
-                                  Model().set_seminar_title(seminar[0]);
-                                  Model().set_seminar_id(seminar[1]);
-                                  Model().set_program_owner(seminar[2]);
-                                  Model().set_date_created(seminar[3]);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const EvaluatePage(),
-                                    ),
-                                  );
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Error. Invalid Access Code.",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0);
-                                }
-                              } else {
-                                Fluttertoast.showToast(
-                                    msg: "Field Cannot be Empty.",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                              }
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    ),
+                      );
+                    },
                     child: const Text("Evaluate"),
                   ),
                 )

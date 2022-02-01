@@ -3,6 +3,7 @@ class Model {
   static String? _seminar_title,
       _seminar_id,
       _program_owner,
+      _program_owner_position,
       _date_created,
       _evaluator_id,
       _full_name,
@@ -51,6 +52,10 @@ class Model {
 
   void set_program_owner(String program_owner) {
     _program_owner = program_owner;
+  }
+
+  void set_program_owner_position(String program_owner_position) {
+    _program_owner_position = program_owner_position;
   }
 
   void set_date_created(String date_created) {
@@ -188,6 +193,10 @@ class Model {
 
   String? get_program_owner() {
     return _program_owner;
+  }
+
+  String? get_program_owner_position() {
+    return _program_owner_position;
   }
 
   String? get_date_created() {

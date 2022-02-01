@@ -29,6 +29,7 @@ class EvaluatePage2 extends StatefulWidget {
   static String button_value = "Evaluate";
   static Color button_color = const Color(0xfff0ad4e);
   static String id_last = "";
+  static String facilitator_topic = "";
   @override
   State<EvaluatePage2> createState() => _EvaluatePage2State();
 }
@@ -52,6 +53,7 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
       setState(() {
         querySnapshot.docs.forEach((doc) {
           EvaluatePage2.facilitators.add(doc['facilitator_name']);
+          EvaluatePage2.facilitator_topic = doc['topic'];
           EvaluatePage2.facilitator_id.add([doc.id]);
         });
       });
@@ -1013,6 +1015,8 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                           'exist': "true",
                                           'facilitator_name':
                                               EvaluatePage2.value,
+                                          'topic':
+                                              EvaluatePage2.facilitator_topic,
                                           'q9': EvaluatePage2.value9,
                                           'q10': EvaluatePage2.value10,
                                           'q11': EvaluatePage2.value11,
@@ -1036,6 +1040,8 @@ class _EvaluatePage2State extends State<EvaluatePage2> {
                                           'exist': "true",
                                           'facilitator_name':
                                               EvaluatePage2.value,
+                                          'topic':
+                                              EvaluatePage2.facilitator_topic,
                                           'q9': EvaluatePage2.value9,
                                           'q10': EvaluatePage2.value10,
                                           'q11': EvaluatePage2.value11,
